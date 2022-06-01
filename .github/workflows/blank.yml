@@ -32,37 +32,37 @@ jobs:
   #          args: --dry-run --show-progress=dots --using-cache=no --verbose
   #        #run: ./tools/php-cs-fixer fix --dry-run --show-progress=dots --using-cache=no --verbose
 
-  type-checker:
-    name: Type Checker
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.0
-          coverage: none
-          tools: none
-
-      - name: Update dependencies with composer
-        uses: php-actions/composer@v6
-        with:
-          command: update
-          args: --no-ansi --no-interaction --no-progress
-
-      #- name: Run vimeo/psalm on public API
-      - name: Run vimeo/psalm
-        uses: docker://vimeo/psalm-github-actions
-        with:
-          security_analysis: true
-        #run: ./tools/psalm --config=.psalm/static-analysis.xml --no-progress --show-info=false
-
-        #- name: Run vimeo/psalm on internal code
-        #run: ./tools/psalm --config=.psalm/config.xml --no-progress --shepherd --show-info=false --stats
+#  type-checker:
+#    name: Type Checker
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#
+#      - name: Install PHP
+#        uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: 8.1
+#          coverage: none
+#          tools: none
+#
+#      - name: Update dependencies with composer
+#        uses: php-actions/composer@v6
+#        with:
+#          command: update
+#          args: --no-ansi --no-interaction --no-progress
+#
+#      #- name: Run vimeo/psalm on public API
+#      - name: Run vimeo/psalm
+#        uses: docker://vimeo/psalm-github-actions
+#        with:
+#          security_analysis: true
+#        #run: ./tools/psalm --config=.psalm/static-analysis.xml --no-progress --show-info=false
+#
+#        #- name: Run vimeo/psalm on internal code
+#        #run: ./tools/psalm --config=.psalm/config.xml --no-progress --shepherd --show-info=false --stats
 
   tests:
     name: Tests
