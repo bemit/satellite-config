@@ -56,27 +56,19 @@ class ConfigAggregator implements ConfigProviderInterface {
         return $merged;
     }
 
-    /**
-     * @return array
-     */
     public function make(): array {
         $config_data = [];
         foreach($this->configurations as $i => $config) {
             if(is_string($config)) {
-                /**
-                 * @var ConfigProviderInterface $config
-                 */
                 $provider_instance = new $config();
                 if($provider_instance instanceof ConfigProviderInterface) {
                     $config_partial = $provider_instance->configure();
+                } else if(is_callable($provider_instance)) {
+                    $config_partial = $provider_instance();
                 } else {
-                    if(is_callable($provider_instance)) {
-                        $config_partial = $provider_instance();
-                    } else {
-                        throw new \InvalidArgumentException(
-                            'configuration at pos `' . $i . '` is not compatible, not implementing `ConfigProviderInterface` and no valid `__invoke` result: ' . $config,
-                        );
-                    }
+                    throw new \InvalidArgumentException(
+                        'configuration at pos `' . $i . '` is not compatible, not implementing `ConfigProviderInterface` and no valid `__invoke` result: ' . $config,
+                    );
                 }
             } else if(is_callable($config)) {
                 $config_partial = call_user_func($config, $config_data);

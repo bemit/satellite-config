@@ -2,7 +2,7 @@
     "name": "orbiter/satellite-config",
     "license": "MIT",
     "homepage": "https://bemit.codes",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Simple config aggregator with caching.",
     "require": {
         "php": ">=8.1"

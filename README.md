@@ -7,7 +7,7 @@
 [![Github actions Build](https://github.com/bemit/satellite-config/actions/workflows/blank.yml/badge.svg)](https://github.com/bemit/satellite-config/actions)
 [![PHP Version Require](http://poser.pugx.org/orbiter/satellite-config/require/php)](https://packagist.org/packages/orbiter/satellite-config)
 
-- simple caching aggregator with caching
+- simple config aggregator with caching
 
 Check [satellite-app](https://github.com/bemit/satellite-app) for a ready to use template, or install just this library:
 
@@ -15,15 +15,15 @@ Check [satellite-app](https://github.com/bemit/satellite-app) for a ready to use
 composer require orbiter/satellite-config
 ```
 
-- [ConfigProvider](./tests/mock/ConfigInvokableProvider.php) implementing `\Satellite\Config\ConfigProviderInterface`
+- [ConfigProvider](./tests/mock/ConfigProvider.php) implementing `Satellite\Config\ConfigProviderInterface`
 - [ConfigInvokableProvider](./tests/mock/ConfigInvokableProvider.php) using `__invoke(): array`
 
-```injectablephp
+```php
 $aggregator = new \Satellite\Config\ConfigAggregator($is_prod ? __DIR__ . '/tmp/config_aggregated.php' : null);
 $aggregator->append( 
     ConfigProvider::class,
     ConfigInvokableProvider::class,
-    // when using cache, is only executed when on warm-up
+    // pass down functions which return an array (when using cache, is only executed on warm-up)
     static fn() => [
         'some_array' => [
             'a' => [],
@@ -33,7 +33,7 @@ $aggregator->append(
     [
         'some_array' => [
             'b' => [],
-            // functions can also be used nested (only executed when on warm-up)
+            // functions can also be used nested (when using cache, only executed on warm-up)
             'c' => static fn() => [],
         ]
     ],
@@ -78,4 +78,4 @@ By committing your code to the code repository you agree to release the code und
 
 ***
 
-Maintained by [Michael Becker](https://mlbr.xyz)
+Maintained by [Michael Becker](https://i-am-digital.eu)
