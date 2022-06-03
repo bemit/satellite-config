@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/orbiter/satellite-config/version.svg)](https://packagist.org/packages/orbiter/satellite-config)
 [![Latest Unstable Version](https://poser.pugx.org/orbiter/satellite-config/v/unstable.svg)](https://packagist.org/packages/orbiter/satellite-config)
-[![codecov](https://codecov.io/gh/bemit/satellite-config/branch/master/graph/badge.svg?token=N376EQ2T5O)](https://codecov.io/gh/bemit/satellite-config)
+[![codecov](https://codecov.io/gh/bemit/satellite-config/branch/master/graph/badge.svg?token=9BopoWmdHw)](https://codecov.io/gh/bemit/satellite-config)
 [![Total Downloads](https://poser.pugx.org/orbiter/satellite-config/downloads.svg)](https://packagist.org/packages/orbiter/satellite-config)
 [![Github actions Build](https://github.com/bemit/satellite-config/actions/workflows/blank.yml/badge.svg)](https://github.com/bemit/satellite-config/actions)
 [![PHP Version Require](http://poser.pugx.org/orbiter/satellite-config/require/php)](https://packagist.org/packages/orbiter/satellite-config)
@@ -23,7 +23,7 @@ $aggregator = new \Satellite\Config\ConfigAggregator($is_prod ? __DIR__ . '/tmp/
 $aggregator->append( 
     ConfigProvider::class,
     ConfigInvokableProvider::class,
-    // pass down functions which return an array (when using cache, is only executed on warm-up)
+    // pass down functions which return an array (when using cache: only executed on warm-up)
     static fn() => [
         'some_array' => [
             'a' => [],
@@ -33,7 +33,7 @@ $aggregator->append(
     [
         'some_array' => [
             'b' => [],
-            // functions can also be used nested (when using cache, only executed on warm-up)
+            // functions can also be used nested (when using cache: only executed on warm-up)
             'c' => static fn() => [],
         ]
     ],
