@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/orbiter/satellite-config/version.svg)](https://packagist.org/packages/orbiter/satellite-config)
 [![Latest Unstable Version](https://poser.pugx.org/orbiter/satellite-config/v/unstable.svg)](https://packagist.org/packages/orbiter/satellite-config)
-[![codecov](https://codecov.io/gh/bemit/satellite-config/branch/main/graph/badge.svg?token=9BopoWmdHw](https://codecov.io/gh/bemit/satellite-config)
+[![codecov](https://codecov.io/gh/bemit/satellite-config/branch/main/graph/badge.svg?token=9BopoWmdHw)](https://codecov.io/gh/bemit/satellite-config)
 [![Total Downloads](https://poser.pugx.org/orbiter/satellite-config/downloads.svg)](https://packagist.org/packages/orbiter/satellite-config)
 [![Github actions Build](https://github.com/bemit/satellite-config/actions/workflows/blank.yml/badge.svg)](https://github.com/bemit/satellite-config/actions)
 [![PHP Version Require](http://poser.pugx.org/orbiter/satellite-config/require/php)](https://packagist.org/packages/orbiter/satellite-config)
