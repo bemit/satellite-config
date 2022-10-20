@@ -37,17 +37,22 @@ class ConfigAggregator implements ConfigProviderInterface {
 
     protected static function aggregate(array $array1, array $array2): array {
         $merged = $array1;
+        $all_list = (!isset($array1) || array_is_list($array1)) && array_is_list($array2);
+        if($all_list) {
+            return array_reduce($array2, static function(array $cleaned, $item) {
+                if(!is_scalar($item) || !in_array($item, $cleaned, true)) {
+                    $cleaned[] = $item;
+                }
+                return $cleaned;
+            }, $array1 ?? []);
+        }
 
         foreach($array2 as $key => &$value) {
             if(is_callable($value)) {
                 $value = $value();
             }
-            if(is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-                $merged[$key] = self::aggregate($merged[$key], $value);
-            } else if(is_numeric($key)) {
-                if(!is_scalar($value) || !in_array($value, $merged, true)) {
-                    $merged[] = $value;
-                }
+            if(is_array($value)) {
+                $merged[$key] = self::aggregate($merged[$key] ?? [], $value);
             } else {
                 $merged[$key] = $value;
             }
@@ -63,7 +68,7 @@ class ConfigAggregator implements ConfigProviderInterface {
      * @return self
      */
     public function append(...$configurations): self {
-        $this->configurations = array_merge($this->configurations, $configurations);
+        $this->configurations = [...$this->configurations, ...$configurations];
         return $this;
     }
 
@@ -75,7 +80,8 @@ class ConfigAggregator implements ConfigProviderInterface {
      */
     public function make(): array {
         $config_data = [];
-        foreach($this->configurations as $i => $config) {
+        $configurations = array_splice($this->configurations, 0);
+        foreach($configurations as $i => $config) {
             if(is_string($config)) {
                 $provider_instance = new $config();
                 if($provider_instance instanceof ConfigProviderInterface) {
@@ -108,6 +114,7 @@ class ConfigAggregator implements ConfigProviderInterface {
      */
     public function configure(): array {
         if($cached = $this->loadCache()) {
+            array_splice($this->configurations, 0);
             return $cached;
         }
 

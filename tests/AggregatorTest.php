@@ -66,6 +66,54 @@ final class AggregatorTest extends TestCase {
         );
     }
 
+    public function testAggregateMergeAndDeduplicateNonAssocMixed(): void {
+        $aggregator = new \Satellite\Config\ConfigAggregator();
+        $aggregator->append(
+            [
+                'some_array' => [
+                    [
+                        'y1' => false,
+                        'y2' => 'yes',
+                    ],
+                    'b',
+                    1,
+                    'a',
+                ],
+            ],
+            [
+                'some_array' => [
+                    [
+                        'x1' => true,
+                        'x2' => 'no',
+                    ],
+                    'b',
+                    1,
+                    'q',
+                ],
+            ],
+        );
+
+        $this->assertEquals(
+            [
+                'some_array' => [
+                    [
+                        'y1' => false,
+                        'y2' => 'yes',
+                    ],
+                    'b',
+                    1,
+                    'a',
+                    [
+                        'x1' => true,
+                        'x2' => 'no',
+                    ],
+                    'q',
+                ],
+            ],
+            $aggregator->make(),
+        );
+    }
+
     public function testAggregateNestedMergeAndOverwrite(): void {
         $aggregator = new \Satellite\Config\ConfigAggregator();
         $aggregator->append(
